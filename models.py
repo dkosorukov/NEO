@@ -46,16 +46,16 @@ class NearEarthObject:
         # handle any edge cases, such as a empty name being represented by `None`
         # and a missing diameter being represented by `float('nan')`.
         
-        self.name = None
-        self.diameter = float('nan')
+        # self.name = None
+        # self.diameter = float('nan')
         
         for key, value in info.items():
             if key == 'designation':
                 self.designation = value
             elif key == 'name':
-                self.name = value
+                self.name = value if value else None
             elif key == 'diameter':
-                self.diameter = float(value)
+                self.diameter = float(value) if value else float('nan')
             elif key == 'hazardous':
                 self.hazardous = True if value == 'Y' else False
             else:
