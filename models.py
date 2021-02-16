@@ -39,18 +39,28 @@ class NearEarthObject:
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
         """
+        
         # TODO: Assign information from the arguments passed to the constructor
         # onto attributes named `designation`, `name`, `diameter`, and `hazardous`.
         # You should coerce these values to their appropriate data type and
         # handle any edge cases, such as a empty name being represented by `None`
         # and a missing diameter being represented by `float('nan')`.
-        self.designation = int(info['designation'])
-        self.name = info['name'] if info['name'] else None
-
-        self.diameter = float(info['diameter']) if info['diameter'] else float('nan')
-        self.hazardous = True if info['hazardous'] == 'Y' else False
-
-        # Create an empty initial collection of linked approaches.
+        
+        self.name = None
+        self.diameter = float('nan')
+        
+        for key, value in info.items():
+            if key == 'designation':
+                self.designation = int(value)
+            elif key == 'name':
+                self.name = value
+            elif key == 'diameter':
+                self.diameter = float(value)
+            elif key == 'hazardous':
+                self.hazardous = True if value == 'Y' else False
+            else:
+                raise AttributeError("Unknown Attribute")                
+        
         self.approaches = []
 
     @property
@@ -64,13 +74,17 @@ class NearEarthObject:
         # TODO: Use this object's attributes to return a human-readable string representation.
         # The project instructions include one possibility. Peek at the __repr__
         # method for examples of advanced string formatting.
+        #return (f'A {self.__class__.__name__} ('
+        #        f'NEO): {self.fullname!r} has a diamter of {self.diameter:.3f} km, and\
+        #            {'is' if self.hazardous else 'is not'} ')
+        
         return (f'A {self.__class__.__name__} ('
-                f'NEO: {self.fullname!r} has a diamter of {self.diameter:.3f} km, and\
-                hazardous: {self.hazardous!r})')
+                f'NEO): {self.fullname!r} has a diameter of {self.diameter:.3f} km, and hazardous: {self.hazardous!r})')
+
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
-        return (f"NearEarthObject(designation={self.designation!r}, name={self.name!r}, "
+        return (f"{self.__class__.__name__} (designation={self.designation!r}, name={self.name!r}, "
                 f"diameter={self.diameter:.3f}, hazardous={self.hazardous!r})")
 
 
@@ -141,3 +155,17 @@ class CloseApproach:
         """Return `repr(self)`, a computer-readable string representation of this object."""
         return (f"CloseApproach(time={self.time_str!r}, distance={self.distance:.2f}, "
                 f"velocity={self.velocity:.2f}, neo={self.neo!r})")
+
+
+if __name__ == '__main__':
+    info={'designation':430, 'name':'Commet', 'diameter':100, 'hazardous':'Y'}
+    neo = NearEarthObject(**info)
+    print(neo)
+
+    info2={'designation':560, 'hazardous':'Y'}
+    neo2 = NearEarthObject(**info2)
+    print(neo2)
+
+    info3={'designation':135, 'hazardous':'N', 'diameter':20}
+    neo3 = NearEarthObject(**info3)
+    print(neo3)
