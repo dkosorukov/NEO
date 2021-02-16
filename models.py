@@ -51,7 +51,7 @@ class NearEarthObject:
         
         for key, value in info.items():
             if key == 'designation':
-                self.designation = int(value)
+                self.designation = value
             elif key == 'name':
                 self.name = value
             elif key == 'diameter':
@@ -112,11 +112,19 @@ class CloseApproach:
         # onto attributes named `_designation`, `time`, `distance`, and `velocity`.
         # You should coerce these values to their appropriate data type and handle any edge cases.
         # The `cd_to_datetime` function will be useful.
-        self._designation = _designation #''
-        self.time = cd_to_datatime(time) #None  # TODO: Use the cd_to_datetime function for this attribute.
-        self.distance = float(distance) #0.0
-        self.velocity = float(velocity) #0.0
-
+        
+        for key, value in info.items():
+            if key == '_designation':
+                self._designation = value
+            elif key == 'time':
+                self.time = cd_to_datetime(value)
+            elif key == 'distance':
+                self.distance = float(value)
+            elif key == 'velocity':
+                self.velocity = float(value)
+            else:
+                raise AttributeError("Unknown Attribute")            
+        
         # Create an attribute for the referenced NEO, originally None.
         self.neo = None
 
@@ -140,7 +148,7 @@ class CloseApproach:
     @property
     def fullname(self):
         # TODO: Use self.designation and self.name to build a fullname for this object.
-        return f'{self._designation!r} ({self.name!r})' if self.name else f'{self.designation!r}'
+        return f'{self._designation!r} ({self.neo!r})' if self.neo else f'{self._designation!r}'
 
 
     def __str__(self):
@@ -148,8 +156,8 @@ class CloseApproach:
         # TODO: Use this object's attributes to return a human-readable string representation.
         # The project instructions include one possibility. Peek at the __repr__
         # method for examples of advanced string formatting.
-        return f'At {self.time_str!r}, {fullname!r} approaches Earth at a distance\
-            of {self.distance:.2f} au and a velocity of {self.velocity:.2f} km/s.'
+        return (f'At {self.time_str!r}, {self.fullname!r} approaches Earth at a distance of '
+               f'{self.distance:.2f} au and a velocity of {self.velocity:.2f} km/s.')
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
@@ -161,6 +169,10 @@ if __name__ == '__main__':
     info={'designation':430, 'name':'Commet', 'diameter':100, 'hazardous':'Y'}
     neo = NearEarthObject(**info)
     print(neo)
+    print(neo.designation)
+    print(neo.name)
+    print(neo.diameter)
+    print(neo.hazardous)
 
     info2={'designation':560, 'hazardous':'Y'}
     neo2 = NearEarthObject(**info2)
@@ -169,3 +181,10 @@ if __name__ == '__main__':
     info3={'designation':135, 'hazardous':'N', 'diameter':20}
     neo3 = NearEarthObject(**info3)
     print(neo3)
+
+    #aux = neo.designation
+    
+    info4 = {'_designation':neo.designation, 'time':'1900-Jan-01 00:00', 'distance':99, 'velocity':'12'}
+    ca = CloseApproach(**info4)
+    print(ca)
+
