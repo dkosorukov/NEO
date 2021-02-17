@@ -33,7 +33,6 @@ def load_neos(neo_csv_path='data/neos.csv'):
             output.append(NearEarthObject(**info))
     return output
 
-
 def load_approaches(cad_json_path='data/cad.json'):
     """Read close approach data from a JSON file.
 
@@ -43,7 +42,7 @@ def load_approaches(cad_json_path='data/cad.json'):
     # Load close approach data from the given JSON file.
     output = []
     with open(cad_json_path) as infile:
-        data = json.load(infile)
+        data = json.load(infile) 
         for approach in data['data']:
             approach = dict(zip(data['fields'], approach))
             info = {'_designation':approach['des'], 'time':approach['cd'], 'distance':approach['dist'], 'velocity':approach['v_rel']}

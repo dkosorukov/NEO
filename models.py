@@ -46,9 +46,7 @@ class NearEarthObject:
         # handle any edge cases, such as a empty name being represented by `None`
         # and a missing diameter being represented by `float('nan')`.
         
-        # self.name = None
-        # self.diameter = float('nan')
-        
+                
         for key, value in info.items():
             if key == 'designation':
                 self.designation = value
@@ -79,7 +77,7 @@ class NearEarthObject:
         #            {'is' if self.hazardous else 'is not'} ')
         
         return (f'A {self.__class__.__name__} ('
-                f'NEO): {self.fullname!r} has a diameter of {self.diameter:.3f} km, and hazardous: {self.hazardous!r})')
+                f'NEO): {self.fullname!r} has a diameter of {self.diameter:.3f} km, and hazardous: {self.hazardous!r}')
 
 
     def __repr__(self):
