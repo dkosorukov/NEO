@@ -43,7 +43,26 @@ class NEODatabase:
 
         # TODO: What additional auxiliary data structures will be useful?
 
+        # A disctionary to fetch a NEW by designation
+        self._designation_neo_dict = {}
+        # A disctionary to fetch a NEW by name
+        self._name_neo_dict = {}
+
         # TODO: Link together the NEOs and their close approaches.
+        # Created dictionary of NEOs by designation and by name
+        for neo in self._neos:
+            # disctionary by designation
+            self._designation_neo_dict[neo.designation] = neo
+            # dictionary by name for NEOs with name
+            if neo.name:
+                self._name_neo_dict[neo.name] = neo
+        
+        # Attache to approach a NEO pulled by designation, add approach to NEO
+        for approach in self._approaches:
+            neo = self._designation_neo_dict[approach._designation]
+            approach.neo = neo
+            neo.approaches.append(approach)
+
 
     def get_neo_by_designation(self, designation):
         """Find and return an NEO by its primary designation.
