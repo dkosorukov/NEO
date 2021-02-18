@@ -30,6 +30,7 @@ def write_to_csv(results, filename):
         writer = csv.writer(outfile)
         writer.writerow(fieldnames)
         for approach in results:
+            # Line to be written to CSV file
             item = [approach.time, approach.distance, approach.velocity, approach._designation, approach.neo.name, approach.neo.diameter, approach.neo.hazardous]
             writer.writerow(item)
 

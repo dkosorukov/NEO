@@ -162,27 +162,3 @@ class CloseApproach:
         return (f"CloseApproach(time={self.time_str!r}, distance={self.distance:.2f}, "
                 f"velocity={self.velocity:.2f}, neo={self.neo!r})")
 
-
-if __name__ == '__main__':
-    info={'designation':430, 'name':'Commet', 'diameter':100, 'hazardous':'Y'}
-    neo = NearEarthObject(**info)
-    print(neo)
-    print(neo.designation)
-    print(neo.name)
-    print(neo.diameter)
-    print(neo.hazardous)
-
-    info2={'designation':560, 'hazardous':'Y'}
-    neo2 = NearEarthObject(**info2)
-    print(neo2)
-
-    info3={'designation':135, 'hazardous':'N', 'diameter':20}
-    neo3 = NearEarthObject(**info3)
-    print(neo3)
-
-    #aux = neo.designation
-    
-    info4 = {'_designation':neo.designation, 'time':'1900-Jan-01 00:00', 'distance':99, 'velocity':'12'}
-    ca = CloseApproach(**info4)
-    print(ca)
-

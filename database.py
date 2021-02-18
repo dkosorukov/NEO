@@ -113,6 +113,6 @@ class NEODatabase:
         """
         # TODO: Generate `CloseApproach` objects that match all of the filters.
         for approach in self._approaches:
-            f = map(lambda x: x(approach), filters)
-            if all(f):
+            filter_outcomes = map(lambda x: x(approach), filters)
+            if all(filter_outcomes):
                 yield approach
